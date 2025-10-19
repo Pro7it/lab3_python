@@ -1,3 +1,126 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-# Create your models here.
+
+class Actor(models.Model):
+    actor_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    birthdate = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Actor'
+
+
+class Director(models.Model):
+    director_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    birthdate = models.DateField(blank=True, null=True)
+    biography = models.TextField(blank=True, null=True)
+    awards = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Director'
+
+
+class Genre(models.Model):
+    genre_id = models.AutoField(primary_key=True)
+    name = models.CharField(unique=True, max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Genre'
+
+
+class Hall(models.Model):
+    hall_id = models.AutoField(primary_key=True)
+    theatre = models.ForeignKey('Theatre', models.DO_NOTHING)
+    name = models.CharField(max_length=50)
+    capacity = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'Hall'
+        unique_together = (('theatre', 'name'),)
+
+
+class Play(models.Model):
+    play_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    genre = models.ForeignKey(Genre, models.DO_NOTHING, blank=True, null=True)
+    duration = models.IntegerField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    author = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Play'
+
+
+class Playactor(models.Model):
+    pk = models.CompositePrimaryKey('play_id', 'actor_id')
+    play = models.ForeignKey(Play, models.DO_NOTHING)
+    actor = models.ForeignKey(Actor, models.DO_NOTHING)
+    role = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'PlayActor'
+
+
+class Playdirector(models.Model):
+    pk = models.CompositePrimaryKey('play_id', 'director_id')
+    play = models.ForeignKey(Play, models.DO_NOTHING)
+    director = models.ForeignKey(Director, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'PlayDirector'
+
+
+class Schedule(models.Model):
+    schedule_id = models.AutoField(primary_key=True)
+    play = models.ForeignKey(Play, models.DO_NOTHING)
+    hall = models.ForeignKey(Hall, models.DO_NOTHING)
+    date = models.DateField(blank=True, null=True)
+    time = models.TimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Schedule'
+        unique_together = (('play', 'hall', 'date', 'time'),)
+
+
+class Theatre(models.Model):
+    theatre_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    city = models.CharField(max_length=20)
+    address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    website = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Theatre'
+        unique_together = (('name', 'city'),)
+
+
+class Ticket(models.Model):
+    ticket_id = models.AutoField(primary_key=True)
+    schedule_id = models.ForeignKey(Schedule, models.CASCADE)
+    seat = models.CharField(max_length=20)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    status = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Ticket'
+        unique_together = (('schedule_id', 'seat'),)
