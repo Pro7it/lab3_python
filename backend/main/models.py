@@ -42,7 +42,7 @@ class Genre(models.Model):
 
 class Hall(models.Model):
     hall_id = models.AutoField(primary_key=True)
-    theatre = models.ForeignKey('Theatre', models.DO_NOTHING)
+    theatre = models.ForeignKey('Theatre', models.CASCADE)
     name = models.CharField(max_length=50)
     capacity = models.IntegerField()
 
@@ -55,7 +55,7 @@ class Hall(models.Model):
 class Play(models.Model):
     play_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    genre = models.ForeignKey(Genre, models.DO_NOTHING, blank=True, null=True)
+    genre = models.ForeignKey(Genre, models.CASCADE, blank=True, null=True)
     duration = models.IntegerField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     author = models.CharField(max_length=100, blank=True, null=True)
@@ -65,10 +65,10 @@ class Play(models.Model):
         db_table = 'Play'
 
 
-class Playactor(models.Model):
+class PlayActor(models.Model):
     pk = models.CompositePrimaryKey('play_id', 'actor_id')
-    play = models.ForeignKey(Play, models.DO_NOTHING)
-    actor = models.ForeignKey(Actor, models.DO_NOTHING)
+    play = models.ForeignKey(Play, models.CASCADE)
+    actor = models.ForeignKey(Actor, models.CASCADE)
     role = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
@@ -76,10 +76,10 @@ class Playactor(models.Model):
         db_table = 'PlayActor'
 
 
-class Playdirector(models.Model):
+class PlayDirector(models.Model):
     pk = models.CompositePrimaryKey('play_id', 'director_id')
-    play = models.ForeignKey(Play, models.DO_NOTHING)
-    director = models.ForeignKey(Director, models.DO_NOTHING)
+    play = models.ForeignKey(Play, models.CASCADE)
+    director = models.ForeignKey(Director, models.CASCADE)
 
     class Meta:
         managed = False
@@ -88,8 +88,8 @@ class Playdirector(models.Model):
 
 class Schedule(models.Model):
     schedule_id = models.AutoField(primary_key=True)
-    play = models.ForeignKey(Play, models.DO_NOTHING)
-    hall = models.ForeignKey(Hall, models.DO_NOTHING)
+    play = models.ForeignKey(Play, models.CASCADE)
+    hall = models.ForeignKey(Hall, models.CASCADE)
     date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
 
