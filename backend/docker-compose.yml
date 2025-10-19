@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    environment:
+      - POSTGRES_DB=lab3_python
+      - POSTGRES_USER=broccoli
+      - POSTGRES_PASSWORD=vegetables
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_lab:/var/lib/postgresql/data
+
+volumes:
+  db_lab:
