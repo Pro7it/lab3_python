@@ -1,4 +1,4 @@
-from BaseRepository import BaseRepository
+from main.repository.BaseRepository import BaseRepository
 from main.models import *
 
 class ActorRepository(BaseRepository):

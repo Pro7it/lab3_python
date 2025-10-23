@@ -8,9 +8,9 @@ class BaseRepository(ABC):
     def get_all(self):
         return list(self.model.objects.all())
 
-    def get_by_id(self, id):
+    def get_by_id(self, _id):
         try:
-            return self.model.objects.get(id=id)
+            return self.model.objects.get(pk=_id)
         except Exception:
             return None
 
