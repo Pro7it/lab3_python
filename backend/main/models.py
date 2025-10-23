@@ -3,7 +3,7 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remov` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
@@ -14,7 +14,6 @@ class Actor(models.Model):
     birthdate = models.DateField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Actor'
 
 
@@ -26,7 +25,6 @@ class Director(models.Model):
     awards = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Director'
 
 
@@ -36,7 +34,6 @@ class Genre(models.Model):
     description = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Genre'
 
 
@@ -47,7 +44,6 @@ class Hall(models.Model):
     capacity = models.IntegerField()
 
     class Meta:
-        managed = False
         db_table = 'Hall'
         unique_together = (('theatre', 'name'),)
 
@@ -61,7 +57,6 @@ class Play(models.Model):
     author = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Play'
 
 
@@ -72,7 +67,6 @@ class PlayActor(models.Model):
     role = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'PlayActor'
 
 
@@ -82,7 +76,6 @@ class PlayDirector(models.Model):
     director = models.ForeignKey(Director, models.CASCADE)
 
     class Meta:
-        managed = False
         db_table = 'PlayDirector'
 
 
@@ -94,7 +87,6 @@ class Schedule(models.Model):
     time = models.TimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Schedule'
         unique_together = (('play', 'hall', 'date', 'time'),)
 
@@ -108,7 +100,6 @@ class Theatre(models.Model):
     website = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Theatre'
         unique_together = (('name', 'city'),)
 
@@ -121,6 +112,5 @@ class Ticket(models.Model):
     status = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Ticket'
         unique_together = (('schedule_id', 'seat'),)
