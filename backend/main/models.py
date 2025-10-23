@@ -106,7 +106,7 @@ class Theatre(models.Model):
 
 class Ticket(models.Model):
     ticket_id = models.AutoField(primary_key=True)
-    schedule_id = models.ForeignKey(Schedule, models.CASCADE)
+    schedule = models.ForeignKey(Schedule, models.CASCADE)
     seat = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     status = models.CharField(max_length=20, blank=True, null=True)
