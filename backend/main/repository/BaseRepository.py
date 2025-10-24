@@ -10,7 +10,7 @@ class BaseRepository(ABC):
 
     def get_by_id(self, id):
         try:
-            return self.model.objects.get(id=id)
+            return self.model.objects.get(pk=id)
         except Exception:
             return None
 

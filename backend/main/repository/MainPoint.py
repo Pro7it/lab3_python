@@ -1,4 +1,4 @@
-from ProductRepository import *
+from .ProductRepository import *
 
 class MainPoint:
     def __init__(self):

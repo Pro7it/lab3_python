@@ -1,8 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Ticket
+from .repository.MainPoint import MainPoint
 
 # Create your views here.
-def test(request):
-    
-    return HttpResponse(str(Ticket.objects.get(ticket_id=1).price   ))
