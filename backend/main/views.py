@@ -13,8 +13,6 @@ def get(request, model_name):
 
     if item_id: return HttpResponse(str(repository.get_by_id(item_id)))
     else: return HttpResponse(repository.get_all())
-from .models import Ticket
-from main.repository.MainPoint import MainPoint
 
 
 # Create your views here.
