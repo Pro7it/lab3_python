@@ -16,6 +16,9 @@ class Actor(models.Model):
     class Meta:
         db_table = 'Actor'
 
+    def __str__(self):
+        return f'{self.name}\n'
+
 
 class Director(models.Model):
     director_id = models.AutoField(primary_key=True)
@@ -27,6 +30,9 @@ class Director(models.Model):
     class Meta:
         db_table = 'Director'
 
+    def __str__(self):
+        return f'{self.name}\n'
+
 
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
@@ -35,6 +41,9 @@ class Genre(models.Model):
 
     class Meta:
         db_table = 'Genre'
+
+    def __str__(self):
+        return f'{self.name}: {self.description}\n'
 
 
 class Hall(models.Model):
@@ -47,6 +56,9 @@ class Hall(models.Model):
         db_table = 'Hall'
         unique_together = (('theatre', 'name'),)
 
+    def __str__(self):
+        return f'{self.name} ({self.capacity}) - {self.theatre}\n'
+
 
 class Play(models.Model):
     play_id = models.AutoField(primary_key=True)
@@ -58,6 +70,9 @@ class Play(models.Model):
 
     class Meta:
         db_table = 'Play'
+
+    def __str__(self):
+        return f'{self.name}, {self.author} - {self.description}\n'
 
 
 class PlayActor(models.Model):
@@ -90,6 +105,9 @@ class Schedule(models.Model):
         db_table = 'Schedule'
         unique_together = (('play', 'hall', 'date', 'time'),)
 
+    def __str__(self):
+        return f'{self.play}\n {self.hall}, {self.date}, {self.time}\n'
+
 
 class Theatre(models.Model):
     theatre_id = models.AutoField(primary_key=True)
@@ -103,6 +121,9 @@ class Theatre(models.Model):
         db_table = 'Theatre'
         unique_together = (('name', 'city'),)
 
+    def __str__(self):
+        return f'{self.name} ({self.city})\n'
+
 
 class Ticket(models.Model):
     ticket_id = models.AutoField(primary_key=True)
@@ -114,3 +135,6 @@ class Ticket(models.Model):
     class Meta:
         db_table = 'Ticket'
         unique_together = (('schedule_id', 'seat'),)
+
+    def __str__(self):
+        return f'{self.seat}\n'

@@ -1,8 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Ticket
+from .repository.MainPoint import MainPoint
 
 # Create your views here.
-def test(request):
-    
-    return HttpResponse(str(Ticket.objects.get(ticket_id=1).price   ))
+def theatre_view(request):
+    return HttpResponse(MainPoint().theaters.get_by_id(request.GET.get('id')))
+
+def play_view(request):
+    return HttpResponse(MainPoint().plays.get_by_id(request.GET.get('id')))
+
+def genre_view(request):
+    return HttpResponse(MainPoint().genres.get_all())
